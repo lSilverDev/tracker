@@ -9,15 +9,15 @@
           class="is-flex is-align-items-center is-justify-content-space-between"
         >
           <section>
-            <strong>{{ tempoEmSegundos }}</strong>
+            <strong>{{ elapsedTime }}</strong>
           </section>
-          <button class="button" @click="iniciar()">
+          <button class="button" @click="start()">
             <span class="icon">
               <i class="fas fa-play"></i>
             </span>
             <span>play</span>
           </button>
-          <button class="button" @click="finalizar()">
+          <button class="button" @click="finalize()">
             <span class="icon">
               <i class="fas fa-stop"></i>
             </span>
@@ -36,17 +36,23 @@ export default defineComponent({
   name: "FormTracker",
   data() {
     return {
-      tempoEmSegundos: 0,
+      timeInSec: 0,
+      timer: 0,
     };
   },
+  computed: {
+    elapsedTime(): string {
+      return new Date(this.timeInSec * 1000).toISOString().substr(11, 8);
+    },
+  },
   methods: {
-    iniciar() {
-      setInterval(() => {
-        this.tempoEmSegundos += 1;
+    start() {
+      this.timer = setInterval(() => {
+        this.timeInSec += 1;
       }, 1000);
     },
-    finalizar() {
-      console.log("Finalizar");
+    finalize() {
+      clearInterval(this.timer);
     },
   },
 });
