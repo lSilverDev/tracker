@@ -7,6 +7,7 @@
       <FormTracker @saveTask="saveTask" />
       <div class="list">
         <Task v-for="(task, index) in tasks" :key="index" :task="task" />
+        <Box v-if="emptyList">Nothing to do!</Box>
       </div>
     </div>
   </main>
@@ -17,7 +18,8 @@ import { defineComponent } from "vue";
 import SideBar from "./components/SideBar/SideBar.vue";
 import FormTracker from "./components/FormTracker/FormTracker.vue";
 import Task from "./components/Task/Task.vue";
-import ITask from "./components/interface/ITask";
+import Box from "./components/Box/Box.vue";
+import ITask from "./interface/ITask";
 
 export default defineComponent({
   name: "App",
@@ -25,11 +27,17 @@ export default defineComponent({
     SideBar,
     FormTracker,
     Task,
+    Box,
   },
   data() {
     return {
       tasks: [] as ITask[],
     };
+  },
+  computed: {
+    emptyList(): boolean {
+      return this.tasks.length === 0;
+    },
   },
   methods: {
     saveTask(task: ITask) {
