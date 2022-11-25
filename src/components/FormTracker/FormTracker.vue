@@ -2,9 +2,9 @@
   <div class="box">
     <div class="columns">
       <div class="column is-8" role="form">
-        <input type="text" class="input" placeholder="task" />
+        <input type="text" class="input" placeholder="task" v-model="desc" />
       </div>
-      <div class="column"><Timer /></div>
+      <div class="column"><Timer @stopwatchStopped="taskFinished" /></div>
     </div>
   </div>
 </template>
@@ -17,6 +17,14 @@ export default defineComponent({
   name: "FormTracker",
   components: {
     Timer,
+  },
+  data() {
+    return { desc: "" };
+  },
+  methods: {
+    taskFinished(timeExpended: number): void {
+      this.desc = "";
+    },
   },
 });
 </script>

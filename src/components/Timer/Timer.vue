@@ -22,6 +22,7 @@ import Stopwatch from "../Stopwatch/Stopwatch.vue";
 
 export default defineComponent({
   name: "Timer",
+  emits: ["stopwatchStopped"],
   components: {
     Stopwatch,
   },
@@ -42,6 +43,8 @@ export default defineComponent({
     finalize() {
       this.running = false;
       clearInterval(this.timer);
+      this.$emit("stopwatchStopped", this.timeInSec);
+      this.timeInSec = 0;
     },
   },
 });
