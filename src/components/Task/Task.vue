@@ -1,20 +1,29 @@
 <template>
   <div class="box has-text-weight-bold">
     <div class="columns">
-      <div class="column is-7">task description</div>
-      <div class="column"><Timer :timeInSec="15" /></div>
+      <div class="column is-7">{{ task?.desc }}</div>
+      <div class="column">
+        <Stopwatch :timeInSec="task?.duration" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import Timer from "../Timer/Timer.vue";
+import { defineComponent, PropType } from "vue";
+import ITask from "../interface/ITask";
+import Stopwatch from "../Stopwatch/Stopwatch.vue";
 
 export default defineComponent({
   name: "Task",
   components: {
-    Timer,
+    Stopwatch,
+  },
+  props: {
+    task: {
+      type: Object as PropType<ITask>,
+      requered: true,
+    },
   },
 });
 </script>
