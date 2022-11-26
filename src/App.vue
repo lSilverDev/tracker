@@ -1,9 +1,12 @@
 <template>
-  <main class="columns is-gapless is-multiline">
+  <main
+    class="columns is-gapless is-multiline"
+    :class="{ 'dark-mode': changeTheme }"
+  >
     <div class="column is-one-quarter">
-      <SideBar />
+      <SideBar @changeTheme="switchTheme" />
     </div>
-    <div class="column is-three-quarter">
+    <div class="column is-three-quarter content">
       <FormTracker @saveTask="saveTask" />
       <div class="list">
         <Task v-for="(task, index) in tasks" :key="index" :task="task" />
@@ -32,6 +35,7 @@ export default defineComponent({
   data() {
     return {
       tasks: [] as ITask[],
+      changeTheme: false,
     };
   },
   computed: {
@@ -43,6 +47,9 @@ export default defineComponent({
     saveTask(task: ITask) {
       this.tasks.push(task);
     },
+    switchTheme(changeTheme: boolean) {
+      this.changeTheme = changeTheme;
+    },
   },
 });
 </script>
@@ -50,5 +57,19 @@ export default defineComponent({
 <style>
 .list {
   padding: 1.25rem;
+}
+
+main {
+  --bg--primary: white;
+  --text--primary: black;
+}
+
+main.dark-mode {
+  --bg--primary: rgb(0, 0, 0);
+  --text--primary: rgb(255, 255, 255);
+}
+
+.content {
+  background-color: var(--bg--primary);
 }
 </style>
